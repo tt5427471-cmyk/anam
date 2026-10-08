@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman • A Little Pink Secret 💗</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --pink: #ff80b5;
+  --light: #ffc4df;
+  --rose: #ff4f9a;
+  --bg: #100711;
+  --muted: #c5aabd;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: white;
+  font-family: "DM Sans", sans-serif;
+}
+
+body { overflow-x: hidden; }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 15%, #ff5ba522, transparent 32%),
+    radial-gradient(circle at 85% 70%, #c73c9b20, transparent 35%),
+    radial-gradient(circle at 50% 50%, #ffffff05, transparent 50%);
+}
+
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image:
+    radial-gradient(#fff 1px, transparent 1px),
+    radial-gradient(#ff9bcb 1px, transparent 1px);
+  background-size: 90px 90px, 150px 150px;
+  animation: stars 30s linear infinite;
+}
+
+@keyframes stars {
+  to { background-position: 180px 200px, -100px -80px; }
+}
+
+.page {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+  padding: 25px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.page.active {
+  display: flex;
+  animation: pageIn .7s ease;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.small-title {
+  color: #ffaad1;
+  font-size: 10px;
+  letter-spacing: 4px;
+  font-weight: bold;
+  margin-bottom: 22px;
+}
+
+h1, h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: clamp(48px, 10vw, 92px);
+  line-height: .95;
+}
+
+h2 {
+  font-size: clamp(43px, 8vw, 78px);
+  line-height: 1;
+}
+
+em { color: var(--pink); font-style: normal; }
+
+.sub {
+  color: var(--muted);
+  line-height: 1.9;
+  margin: 24px auto;
+  max-width: 550px;
+}
+
+.btn {
+  border: 0;
+  padding: 15px 25px;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(110deg, #f94e9b, #b65cce);
+  box-shadow: 0 12px 45px #ff4f9a25;
+  transition: .25s;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 55px #ff4f9a55;
+}
+
+.login { width: min(94vw, 680px); position: relative; }
+
+.login-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: #ff5ca51b;
+  filter: blur(60px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.lock {
+  width: 82px;
+  height: 82px;
+  border: 1px solid #ffacd455;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 27px;
+  font-size: 38px;
+  color: var(--light);
+  box-shadow: 0 0 55px #ff70b529;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-8px); }
+}
+
+.password {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 28px 0;
+}
+
+.password input {
+  width: min(260px, 65vw);
+  padding: 16px 20px;
+  border: 1px solid #ffadd444;
+  border-radius: 16px;
+  background: #ffffff08;
+  color: white;
+  outline: none;
+  text-align: center;
+  font-size: 18px;
+}
+
+.password input:focus { border-color: var(--pink); }
+
+#error {
+  color: #ff9dbf;
+  min-height: 22px;
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.welcome { max-width: 850px; }
+
+.welcome h2 {
+  font-size: clamp(60px, 11vw, 112px);
+  letter-spacing: -2px;
+}
+
+.welcome p {
+  color: var(--muted);
+  line-height: 1.9;
+  margin: 25px 0;
+  font-size: 17px;
+}
+
+.panel {
+  width: min(95vw, 850px);
+  padding: 40px;
+  border: 1px solid #ff9dcc30;
+  background: #ffffff06;
+  border-radius: 8px 30px 8px 30px;
+  box-shadow: 0 30px 90px #0007;
+  text-align: left;
+}
+
+.panel h2 { margin-bottom: 22px; }
+
+.letter-text {
+  min-height: 280px;
+  color: #f1dce9;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 23px;
+  line-height: 1.8;
+  white-space: pre-line;
+  margin-bottom: 28px;
+}
+
+.section { width: min(95vw, 1050px); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+  margin: 32px 0;
+}
+
+.card {
+  border: 1px solid #ff9dcc25;
+  border-radius: 22px;
+  background: #ffffff07;
+  padding: 14px;
+  text-align: left;
+}
+
+.card-art {
+  min-height: 170px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  font-size: 55px;
+  background: linear-gradient(140deg, #54213f, #211124);
+}
+
+.card:nth-child(2) .card-art {
+  background: linear-gradient(140deg, #69264e, #291328);
+}
+
+.card:nth-child(3) .card-art {
+  background: linear-gradient(140deg, #83345f, #28152b);
+}
+
+.card h3 { margin: 16px 5px 7px; }
+.card p { color: var(--muted); font-size: 13px; line-height: 1.7; margin: 0 5px 10px; }
+
+.gifts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.gift {
+  min-height: 205px;
+  border: 1px solid #ff9dcc35;
+  border-radius: 22px;
+  color: white;
+  background: #ffffff08;
+  font-size: 54px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.gift:hover {
+  transform: translateY(-8px) rotate(-1deg);
+  background: #ff80b514;
+  border-color: var(--pink);
+}
+
+.gift small {
+  display: block;
+  margin-top: 17px;
+  color: #f3b4d3;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.result {
+  min-height: 55px;
+  color: var(--light);
+  line-height: 1.8;
+  margin: 15px 0;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #080308eF;
+  z-index: 20;
+  place-items: center;
+  padding: 20px;
+}
+
+.modal.show { display: grid; }
+
+.modal-box {
+  position: relative;
+  width: min(90vw, 500px);
+  padding: 55px 30px;
+  background: #21101f;
+  border: 1px solid #ff9dcc50;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 25px 90px #000;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: 0;
+  background: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+#modalText {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 27px;
+  line-height: 1.6;
+  color: #ffe0ef;
+}
+
+.jar {
+  width: 180px;
+  height: 215px;
+  margin: 35px auto;
+  position: relative;
+  border: 3px solid #ffadd477;
+  border-radius: 28px 28px 45px 45px;
+  background: linear-gradient(150deg, #ffb5d51b, #ff4f9a20);
+  display: grid;
+  place-items: center;
+  font-size: 65px;
+  box-shadow: inset 0 0 40px #ff80b51c, 0 0 45px #ff80b51b;
+}
+
+.jar::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 25px;
+  right: 25px;
+  height: 15px;
+  background: #ffacd4;
+  border-radius: 7px;
+}
+
+.jar button {
+  border: 0;
+  background: none;
+  font-size: 62px;
+  cursor: pointer;
+}
+
+.jar-hint { color: var(--muted); }
+
+.hidden { display: none !important; }
+
+.final { max-width: 800px; }
+
+.big-heart {
+  font-size: 90px;
+  color: var(--pink);
+  text-shadow: 0 0 50px #ff65aa55;
+  animation: beat 1.3s infinite;
+}
+
+@keyframes beat {
+  50% { transform: scale(1.12); }
+}
+
+.final h2 { font-size: clamp(55px, 10vw, 100px); }
+
+.final p {
+  color: #d4b9ca;
+  line-height: 1.9;
+  font-size: 17px;
+  margin: 25px 0;
+}
+
+.final blockquote {
+  color: var(--light);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 25px;
+  line-height: 1.6;
+  margin: 24px 0;
+}
+
+#confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@media(max-width:700px) {
+  .page { padding: 20px; }
+  .grid, .gifts { grid-template-columns: 1fr; }
+  .card-art { min-height: 135px; }
+  .gift { min-height: 145px; }
+  .panel { padding: 27px 21px; }
+  .letter-text { font-size: 21px; min-height: 310px; }
+  .password { flex-direction: column; align-items: center; }
+  .password input { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<div class="stars"></div>
+<canvas id="confetti"></canvas>
+
+<!-- LAYER 1: SECRET LOCK -->
+<section id="lockPage" class="page active">
+  <div class="login-glow"></div>
+  <div class="login">
+    <div class="small-title">✦ A PRIVATE LITTLE WORLD ✦</div>
+    <div class="lock">♡</div>
+    <h1>Something is waiting<br><em>for Aman.</em></h1>
+    <p class="sub">
+      A little pink universe, a few hidden secrets,
+      and something made just for you.
+    </p>
+
+    <div class="password">
+      <input id="pass" type="password" placeholder="Enter the secret password"
+        autocomplete="off">
+      <button class="btn" id="unlock">UNLOCK ♡</button>
+    </div>
+
+    <p id="error"></p>
+    <p class="sub" style="font-size:12px">Hint: your favourite colour ✨</p>
+  </div>
+</section>
+
+<!-- LAYER 2: WELCOME -->
+<section id="welcomePage" class="page">
+  <div class="welcome">
+    <div class="small-title">CHAPTER 01 • JUST FOR YOU</div>
+    <h2>Hey,<br><em>Aman.</em></h2>
+    <p>
+      Not just another link.<br>
+      Not just another message.<br>
+      A tiny world made with a little extra care.
+    </p>
+    <button class="btn next" data-page="letterPage">ENTER YOUR WORLD →</button>
+  </div>
+</section>
+
+<!-- LAYER 3: LETTER -->
+<section id="letterPage" class="page">
+  <div class="panel">
+    <div class="small-title">CHAPTER 02 • A LITTLE LETTER</div>
+    <h2>Dear <em>Aman,</em> 💌</h2>
+    <div id="letterText" class="letter-text"></div>
+    <button class="btn next" data-page="memoryPage">KEEP GOING ↓</button>
+  </div>
+</section>
+
+<!-- LAYER 4: MEMORIES -->
+<section id="memoryPage" class="page">
+  <div class="section">
+    <div class="small-title">CHAPTER 03 • THE LITTLE THINGS</div>
+    <h2>Little moments.<br><em>Real smiles.</em></h2>
+    <p class="sub">Some moments are small, but they stay with us for a long time.</p>
+
+    <div class="grid">
+      <article class="card">
+        <div class="card-art">🌸</div>
+        <h3>The good vibes</h3>
+        <p>For the random conversations that make an ordinary day better.</p>
+      </article>
+      <article class="card">
+        <div class="card-art">🫶</div>
+        <h3>The real ones</h3>
+        <p>Good people make even simple moments feel special.</p>
+      </article>
+      <article class="card">
+        <div class="card-art">💗</div>
+        <h3>Your own colour</h3>
+        <p>A little pink, a little happiness, and a whole lot of personality.</p>
+      </article>
+    </div>
+
+    <button class="btn next" data-page="giftPage">THREE LITTLE SECRETS →</button>
+  </div>
+</section>
+
+<!-- LAYER 5: SECRET GIFTS -->
+<section id="giftPage" class="page">
+  <div class="section">
+    <div class="small-title">CHAPTER 04 • PICK A SECRET</div>
+    <h2>Three boxes.<br><em>Your choice.</em></h2>
+    <p class="sub">Tap each gift to uncover a hidden message.</p>
+
+    <div class="gifts">
+      <button class="gift" data-message="Never forget that your smile can make an ordinary day brighter. Keep that happiness alive. 💗">
+        🎁<small>FOR YOUR SMILE</small>
+      </button>
+      <button class="gift" data-message="May your future bring you peace, exciting opportunities, good people and reasons to feel proud of yourself. ✨">
+        🎁<small>FOR YOUR FUTURE</small>
+      </button>
+      <button class="gift" data-message="Here is the secret: you do not need to be perfect to be special. Just keep being your genuine self. 🫶">
+        🎁<small>THE REAL SECRET</small>
+      </button>
+    </div>
+
+    <p id="giftMessage" class="result"></p>
+    <button class="btn next" data-page="jarPage">OPEN THE WISH JAR →</button>
+  </div>
+</section>
+
+<!-- LAYER 6: WISH JAR -->
+<section id="jarPage" class="page">
+  <div class="section">
+    <div class="small-title">CHAPTER 05 • A JAR OF WISHES</div>
+    <h2>A little jar.<br><em>A lot of good wishes.</em></h2>
+    <p class="sub">Tap the heart to reveal a new wish each time.</p>
+
+    <div class="jar">
+      <button id="wishButton" aria-label="Reveal a wish">💗</button>
+    </div>
+
+    <p id="wishText" class="result">Your first little wish is waiting...</p>
+    <button class="btn next" data-page="promisePage">ONE LAST THING →</button>
+  </div>
+</section>
+
+<!-- LAYER 7: FRIENDSHIP PROMISE -->
+<section id="promisePage" class="page">
+  <div class="panel">
+    <div class="small-title">CHAPTER 06 • A SMALL REMINDER</div>
+    <h2>For the days<br><em>you forget.</em></h2>
+    <p class="letter-text" style="min-height:0">
+You matter more than you sometimes realise.
+
+You deserve genuine people, peaceful days,
+unexpected laughter and the courage to try again.
+
+Take your time.
+Celebrate your small wins.
+Never let one difficult day define your whole story.
+
+And whenever life feels a little too serious,
+remember to leave some room for pink, smiles
+and the things that make you happy. 💗
+    </p>
+    <button class="btn next" data-page="finalPage">REVEAL THE FINAL SECRET ✨</button>
+  </div>
+</section>
+
+<!-- FINAL SURPRISE -->
+<section id="finalPage" class="page">
+  <div class="final">
+    <div class="small-title">CHAPTER 07 • MADE WITH CARE</div>
+    <div class="big-heart">♡</div>
+    <h2>This little world<br>is <em>yours, Aman.</em></h2>
+    <p>
+      No grand occasion needed.<br>
+      Sometimes a small surprise is enough to say:<br>
+      “You are appreciated. Keep being you.”
+    </p>
+    <blockquote>
+      “May you always find a reason to smile,<br>
+      a dream worth chasing,<br>
+      and people who appreciate the real you.”
+    </blockquote>
+    <p style="color:#ff9dca">A little pink. A little magic. A little something just for you. 💗</p>
+    <button class="btn" id="replay">↻ REPLAY THE EXPERIENCE</button>
+  </div>
+</section>
+
+<!-- MESSAGE MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" id="closeModal" aria-label="Close">×</button>
+    <div style="font-size:48px;margin-bottom:20px">💗</div>
+    <div id="modalText"></div>
+  </div>
+</div>
+
+<script>
+/* PAGE NAVIGATION */
+function openPage(id) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (id === "finalPage") startConfetti();
+}
+
+/* PASSWORD: pink */
+document.getElementById("unlock").addEventListener("click", function() {
+  const password = document.getElementById("pass").value.trim().toLowerCase();
+  const error = document.getElementById("error");
+
+  if (password === "pink") {
+    error.textContent = "";
+    this.textContent = "UNLOCKED ♡";
+    setTimeout(() => openPage("welcomePage"), 450);
+  } else {
+    error.textContent = "Not quite! Think of your favourite colour. 💗";
+    document.querySelector(".login").animate(
+      [
+        { transform: "translateX(-7px)" },
+        { transform: "translateX(7px)" },
+        { transform: "translateX(-4px)" },
+        { transform: "translateX(0)" }
+      ],
+      { duration: 300 }
+    );
+  }
+});
+
+document.getElementById("pass").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") document.getElementById("unlock").click();
+});
+
+/* NEXT CHAPTER BUTTONS */
+document.querySelectorAll(".next").forEach(button => {
+  button.addEventListener("click", function() {
+    openPage(this.dataset.page);
+  });
+});
+
+/* TYPEWRITER LETTER */
+const message = `I wanted to make something a little different for you, Aman. 💗
+
+Not because there needs to be a special occasion,
+but because sometimes a thoughtful surprise
+can make an ordinary day feel a little brighter.
+
+I hope you keep finding reasons to laugh,
+people who appreciate you,
+and little moments that make life feel beautiful.
+
+Keep your confidence.
+Keep your kindness.
+Keep the things that make you uniquely you.
+
+And yes, a little pink magic never hurts. ✨
+
+This tiny world was made just for you.`;
+
+let letterStarted = false;
+
+document.querySelector('[data-page="letterPage"]').addEventListener("click", function() {
+  if (letterStarted) return;
+  letterStarted = true;
+
+  const target = document.getElementById("letterText");
+  let index = 0;
+
+  const timer = setInterval(() => {
+    target.textContent = message.slice(0, index);
+    index++;
+    if (index > message.length) clearInterval(timer);
+  }, 22);
+});
+
+/* GIFT MODALS */
+const modal = document.getElementById("modal");
+const modalText = document.getElementById("modalText");
+
+document.querySelectorAll(".gift").forEach(gift => {
+  gift.addEventListener("click", function() {
+    modalText.textContent = this.dataset.message;
+    modal.classList.add("show");
+
+    document.getElementById("giftMessage").textContent =
+      "A little secret has been opened. Choose another box or continue. 💗";
+  });
+});
+
+document.getElementById("closeModal").addEventListener("click", () => {
+  modal.classList.remove("show");
+});
+
+modal.addEventListener("click", function(e) {
+  if (e.target === modal) modal.classList.remove("show");
+});
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") modal.classList.remove("show");
+});
+
+/* WISH JAR */
+const wishes = [
+  "May your next chapter bring unexpected happiness. ✨",
+  "May you always have the courage to follow your dreams. 🌸",
+  "May genuine people always find their way into your life. 🫶",
+  "May you find peace even on your busiest days. 💗",
+  "May you never run out of reasons to smile. 😊",
+  "May every little step take you closer to something beautiful. 🌷",
+  "May you always remember how much your presence matters. 💖"
+];
+
+let wishIndex = 0;
+
+document.getElementById("wishButton").addEventListener("click", function() {
+  document.getElementById("wishText").textContent = wishes[wishIndex];
+  wishIndex = (wishIndex + 1) % wishes.length;
+
+  this.animate(
+    [{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }],
+    { duration: 350 }
+  );
+});
+
+/* PINK CONFETTI */
+let confettiAnimation = null;
+
+function startConfetti() {
+  if (confettiAnimation) cancelAnimationFrame(confettiAnimation);
+
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  if (reducedMotion) return;
+
+  const colors = ["#ff80b5", "#ffc4df", "#ffffff", "#ff4f9a", "#dba6ff"];
+
+  const particles = Array.from({ length: 100 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    size: 2 + Math.random() * 4,
+    speed: 1 + Math.random() * 2,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    drift: (Math.random() - 0.5) * 1.4
+  }));
+
+  let frames = 0;
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.y += p.speed;
+      p.x += p.drift;
+
+      if (p.y > canvas.height) {
+        p.y = -10;
+        p.x = Math.random() * canvas.width;
+      }
+
+      ctx.globalAlpha = 0.8;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    frames++;
+
+    if (frames < 900) {
+      confettiAnimation = requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiAnimation = null;
+    }
+  }
+
+  animate();
+}
+
+window.addEventListener("resize", function() {
+  const canvas = document.getElementById("confetti");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+/* REPLAY */
+document.getElementById("replay").addEventListener("click", function() {
+  if (confettiAnimation) cancelAnimationFrame(confettiAnimation);
+  confettiAnimation = null;
+
+  letterStarted = false;
+  wishIndex = 0;
+
+  document.getElementById("letterText").textContent = "";
+  document.getElementById("wishText").textContent =
+    "Your first little wish is waiting...";
+  document.getElementById("giftMessage").textContent = "";
+  document.getElementById("pass").value = "";
+  document.getElementById("error").textContent = "";
+  document.getElementById("unlock").textContent = "UNLOCK ♡";
+  modal.classList.remove("show");
+
+  openPage("lockPage");
+});
+</script>
+</body>
+</html>
